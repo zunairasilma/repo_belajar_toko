@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
+    public function show()
+    {
+        return customers::all();
+    }
     public function store(Request $request)
     {
     	$validator=Validator::make($request->all(),
