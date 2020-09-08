@@ -15,15 +15,15 @@ class OrdersController extends Controller
     }
     public function detail($id)
     {
-        if(order::where('id_order', $id)->exists()){
-            $data_order = order::join('customers', 'order.id_customers', 'customers.id_customers')->join('product', 'order.id_product', 'product.id_product')
-                                        ->where('order.id_order', '=', $id)
+        if(Orders::where('id_orders', $id)->exists()){
+            $data_orders = Orders::join('customers', 'orders.id_customers', 'customers.id_customers')->join('product', 'orders.id_product', 'product.id_product')
+                                        ->where('orders.id_orders', '=', $id)
                                         ->get();
-            return Response()->json($data_order);
+            return Response()->json($data_orders);
     }
     else{
         return Response()->(['message'=>'Tidak ditemukan']);
-    }
+        }
     }
     public function store(Request $request){
     	$validator=Validator::make($request->all(),
@@ -48,5 +48,30 @@ class OrdersController extends Controller
     	else {
     		return Response()->json(['status'=>0]);
     	}
+    }
+        public function update($id, Request $request)
+    {
+        $validator=Validator::make($request->all(),
+            [                
+                'id_customers' => 'required',
+                'id_product' => 'required',
+            ]
+        );
+
+        if($validator->fails()){
+            return Response()->json($validator->errors());
+        }
+
+        $ubah = order::where('id_order', $id)->update([            
+            'id_customers' => $request->id_customers,
+            'id_product' => $request->id_product,
+        ]);
+
+        if($ubah) {
+            return Response()->json(['status' => 1]);
+        }
+        else {
+            return Response()->json(['status' => 0]);
+        }
     }
 }

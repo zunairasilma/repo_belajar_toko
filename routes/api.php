@@ -19,11 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/customers', 'customersController@show');
 Route::post('/customers', 'CustomersController@store');
+Route::put('/customers/{id}', 'customersController@update');
 
 Route::get('/product', 'productController@show');
 Route::post('/product', 'ProductController@store');
-
+Route::put('/product/{id}', 'productController@update');
 
 Route::get('/order', 'orderController@show');
 Route::get('/order/{id}', 'orderController@detail');
 Route::post('/orders', 'OrdersController@store');
+Route::put('/order/{id}', 'orderController@update');
