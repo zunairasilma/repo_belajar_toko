@@ -73,5 +73,14 @@ class OrdersController extends Controller
         else {
             return Response()->json(['status' => 0]);
         }
+        public function destroy($id){
+        $hapus = Orders::where('id',$id)->delete();
+        if($hapus){
+            return Response()->json(['status'=>1]);
+        }
+        else{
+            return Response()->json(['status'=>0]);
+        }
+    }
     }
 }
